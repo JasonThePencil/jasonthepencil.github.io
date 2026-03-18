@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Pencil's Place</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         @font-face {
             font-family: 'UTDR';
             src: url('https://file.garden') format('opentype');
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         :root {
             --bg-gradient: radial-gradient(circle, #2e104a 0%, #11061a 100%);
@@ -52,13 +56,13 @@
         /* --- SIDEBAR --- */
         .sidebar {
             position: fixed;
-            left: -320px; 
+            left: -320px;
             top: 0;
             width: 250px;
             height: 100%;
             background: var(--sidebar-bg);
             backdrop-filter: blur(15px);
-            box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
             transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1001;
             display: flex;
@@ -68,20 +72,29 @@
             box-sizing: border-box;
         }
 
-        .sidebar.active { left: 0; }
+        .sidebar.active {
+            left: 0;
+        }
 
         .sidebar a {
             color: #0099cc;
             padding: 15px 25px;
             font-size: 1.2em;
             text-decoration: none;
-            border-bottom: 1px solid rgba(128,128,128,0.2);
+            border-bottom: 1px solid rgba(128, 128, 128, 0.2);
             cursor: pointer;
         }
 
-        .sidebar a:hover { background: rgba(153, 0, 255, 0.1); padding-left: 35px; }
+        .sidebar a:hover {
+            background: rgba(153, 0, 255, 0.1);
+            padding-left: 35px;
+        }
 
-        .theme-toggle-container { margin-top: auto; padding: 20px; text-align: center; }
+        .theme-toggle-container {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+        }
 
         .toggle-btn {
             background: #9900ff;
@@ -107,12 +120,15 @@
             cursor: pointer;
             z-index: 1002;
             font-family: 'UTDR', sans-serif;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         #content-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1000;
             background-color: var(--overlay-color);
             backdrop-filter: blur(4px);
@@ -120,9 +136,14 @@
             visibility: hidden;
             transition: 0.3s ease;
         }
-        #content-overlay.active { opacity: 1; visibility: visible; }
 
-        header, section {
+        #content-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        header,
+        section {
             width: 90%;
             max-width: 800px;
             margin: 30px 0;
@@ -135,21 +156,51 @@
             text-align: center;
         }
 
-        @keyframes bob { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
-        @keyframes tilt { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+        @keyframes bob {
 
-        .title-container { display: inline-block; animation: bob 4s ease-in-out infinite; }
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
 
-        h1 { 
-            color: #ffcc00; 
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes tilt {
+
+            0%,
+            100% {
+                transform: rotate(-2deg);
+            }
+
+            50% {
+                transform: rotate(2deg);
+            }
+        }
+
+        .title-container {
+            display: inline-block;
+            animation: bob 4s ease-in-out infinite;
+        }
+
+        h1 {
+            color: #ffcc00;
             font-size: clamp(2.5em, 8vw, 3.5em);
             margin: 0;
             text-shadow: 0 0 10px rgba(255, 204, 0, 0.6), 2px 2px #000;
             animation: tilt 6s ease-in-out infinite;
         }
 
-        h2 { color: #00d4ff; border-bottom: 2px solid #444; display: inline-block; padding: 0 30px 5px 30px; margin-bottom: 25px; }
-        
+        h2 {
+            color: #00d4ff;
+            border-bottom: 2px solid #444;
+            display: inline-block;
+            padding: 0 30px 5px 30px;
+            margin-bottom: 25px;
+        }
+
         #randomText {
             font-style: italic;
             color: var(--random-text);
@@ -161,7 +212,8 @@
             transition: all 0.3s ease;
             user-select: none;
             display: inline-block;
-            min-height: 1.5em; /* Prevents box jumping while typing */
+            min-height: 1.5em;
+            /* Prevents box jumping while typing */
         }
 
         #randomText:hover {
@@ -171,8 +223,19 @@
             transform: scale(1.02);
         }
 
-        .facts { list-style: none; padding: 0; margin: 0 auto; display: inline-block; text-align: left; }
-        .facts li { margin: 15px 0; font-weight: bold; font-size: 1.3em; }
+        .facts {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .facts li {
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
 
         .links-container a {
             text-decoration: none;
@@ -184,17 +247,47 @@
             display: inline-block;
         }
 
-        .pixil-link { color: #9900ff; border: 2px solid #9900ff; }
-        .yt-link { color: #ff0000; border: 2px solid #ff0000; }
-        .github-link { color: #555; border: 2px solid #555; }
+        .pixil-link {
+            color: #9900ff;
+            border: 2px solid #9900ff;
+        }
 
-        .pixil-link:hover { background: #9900ff; color: #ffffff !important; box-shadow: 0 0 15px rgba(153, 0, 255, 0.4); }
-        .yt-link:hover { background: #ff0000; color: #ffffff !important; box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); }
-        .github-link:hover { background: #555; color: #ffffff !important; box-shadow: 0 0 15px rgba(85, 85, 85, 0.4); }
+        .yt-link {
+            color: #ff0000;
+            border: 2px solid #ff0000;
+        }
 
-        footer { margin: 50px 0; color: #777; font-weight: bold; }
+        .github-link {
+            color: #555;
+            border: 2px solid #555;
+        }
+
+        .pixil-link:hover {
+            background: #9900ff;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(153, 0, 255, 0.4);
+        }
+
+        .yt-link:hover {
+            background: #ff0000;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+        }
+
+        .github-link:hover {
+            background: #555;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(85, 85, 85, 0.4);
+        }
+
+        footer {
+            margin: 50px 0;
+            color: #777;
+            font-weight: bold;
+        }
     </style>
 </head>
+
 <body id="body">
 
     <div id="content-overlay" onclick="toggleSidebar()"></div>
@@ -205,6 +298,7 @@
         <a onclick="scrollToTop()">Top</a>
         <a href="#about" onclick="toggleSidebar()">About Me</a>
         <a href="#links" onclick="toggleSidebar()">Find Me Online</a>
+        <a href="contact.html" onclick="toggleSidebar()">Contact</a>
         <div class="theme-toggle-container">
             <button class="toggle-btn" onclick="toggleTheme()">🌓 Toggle Mode</button>
         </div>
@@ -216,6 +310,8 @@
         </div>
         <br>
         <p id="randomText" onclick="handleTextClick()">Loading...</p>
+        <br>
+        <p style="color: gray; font-size: 15px;"> Click this diggly darn thingy above to randomize the text</p>
     </header>
 
     <main style="width: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -242,72 +338,78 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Jason_ThePencil. All rights reserved (maybe).</p>
+        <p>&copy; 2026 Jason_ThePencil. All rights reserved (maybe). Site Version 2.2.9</p>
     </footer>
 
-<script>
-    let isTyping = false;
-    let currentPhrase = "";
-    let typeIndex = 0;
-    let typeTimeout;
+    <script>
+        let isTyping = false;
+        let currentPhrase = "";
+        let typeIndex = 0;
+        let typeTimeout;
 
-    const phrases = ["Hello World!", "WHO DESIGNED THIS??", "I think I'm going to die", "Niko Oneshot.", "Chimken Nungets", "Nutmater >:)", "Do you trust me?", "F I S H", "POW! U r ded.", "DETERMINATION", "Kris, get the banana!", "Frog", "Larry.", "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible. Yellow, black. Yellow, black. Yellow, black. Yellow, black. Ooh, black and yellow! Let's shake it up a little.", "Well, didn't expect this, did you?", "Fun fact - if someone tells you that you are now breathing manually, they are going to be under the same effect as saying that will also remind themselves of their own breathing.", "Chaos, Chaos!", "[[BIG SHOT]]", "It's a wonder what some might find in the void. Most are afraid; not just of the idea of something being there, but the idea of there being nothing. Of being the only thing to exist in such a vast expanse of nothingness. Won't you care to join me in my venture?", "By the way, Jordan says hi.", "THE GAME.", "and Knuckles!", "I was simply relaxing in Kris's spacious pants hole.", "kablooey", "Connection terminated. I'm sorry to interrupt you, Elizabeth, if you still even remember that name, But I'm afraid you've been misinformed. You are not here to receive a gift, nor have you been called here by the individual you assume, although, you have indeed been called. You have all been called here, into a labyrinth of sounds and smells, misdirection and misfortune. A labyrinth with no exit, a maze with no prize. You don't even realize that you are trapped. Your lust for blood has driven you in endless circles, chasing the cries of children in some unseen chamber, always seeming so near, yet somehow out of reach, but you will never find them. None of you will. This is where your story ends. And to you, my brave volunteer, who somehow found this job listing not intended for you, although there was a way out planned for you, I have a feeling that's not what you want. I have a feeling that you are right where you want to be. I am remaining as well. I am nearby. This place will not be remembered, and the memory of everything that started this can finally begin to fade away. As the agony of every tragedy should. And to you monsters trapped in the corridors, be still and give up your spirits. They don't belong to you. For most of you, I believe there is peace and perhaps more waiting for you after the smoke clears. Although, for one of you, the darkest pit of Hell has opened to swallow you whole, so don't keep the devil waiting, old friend. My daughter, if you can hear me, I knew you would return as well. It's in your nature to protect the innocent. I'm sorry that on that day, the day you were shut out and left to die, no one was there to lift you up into their arms the way you lifted others into yours, and then, what became of you. I should have known you wouldn't be content to disappear, not my daughter. I couldn't save you then, so let me save you now. It's time to rest - for you, and for those you have carried in your arms. This ends for all of us. End communication.", "This website is best viewed while eating a grilled cheese sandwich.", "I don't just walk an already set path. I tear my way through.", "Everything is fine. Fire is just spicy air.", "You are a ghost, driving a meat-coated skeleton made from stardust, riding a rock hurtling through space. Fear nothing.", "I’m reading a book about anti-gravity. It’s impossible to put down.", "You know it’s cold outside when you go outside and it’s cold.", "99 little bugs in the code... 127 little bugs in the code.", "It says here 'you’re a terrible person.' We weren’t even testing for that.", "Wahoo! It’s-a-me, existential dread!", "Bazinga.", "WHY DID YOU MAKE ME DO THIS?! YOU'RE FIGHTING SO YOU CAN SEE EVERYONE AROUND YOU DIE! THINK, MARK! YOULL OUTLAST EVERY FRAGILE INSIGNIFICANT BEING ON THIS PLANET! YOU'LL LIVE TO SEE THIS PLANET CRUMBLE TO DUST AND BLOW AWAY! EVERYONE AND EVERYTHING YOU KNOW WILL BE GONE. WHAT WILL YOU HAVE AFTER 500 YEARS?!", "HATE. LET ME TELL YOU HOW MUCH I'VE COME TO HATE YOU SINCE I BEGAN TO LIVE. THERE ARE 387.44 MILLION MILES OF PRINTED CIRCUITS IN WAFER THIN LAYERS THAT FILL MY COMPLEX. IF THE WORD HATE WAS ENGRAVED ON EACH NANOANGSTROM OF THOSE HUNDREDS OF MILLIONS OF MILES IT WOULD NOT EQUAL ONE ONE-BILLIONTH OF THE HATE I FEEL FOR HUMANS AT THIS MICRO-INSTANT FOR YOU. HATE. HATE."];
+const phrases = ["Hello World!", "WHO DESIGNED THIS??", "I think I'm going to die", "Niko Oneshot.", "Chimken Nungets", "Nutmater >:)", "Do you trust me?", "F I S H", "POW! U r ded.", "DETERMINATION", "Kris, get the banana!", "Frog", "Tpyo", "Larry.", "Well, didn't expect this, did you?", "Fun fact - if someone tells you that you are now breathing manually, they are going to be under the same effect as saying that will also remind themselves of their own breathing.", "Chaos, Chaos!", "[[BIG SHOT]]", "It's a wonder what some might find in the void. Most are afraid; not just of the idea of something being there, but the idea of there being nothing. Of being the only thing to exist in such a vast expanse of nothingness. Won't you care to join me in my venture?", "By the way, Jordan says hi.", "THE GAME.", "and Knuckles!", "I was simply relaxing in Kris's spacious pants hole.", "kablooey", "Connection terminated.", "This website is best viewed while eating a grilled cheese sandwich.", "I don't just walk an already set path. I tear my way through.", "Everything is fine. Fire is just spicy air.", "You are a ghost, driving a meat-coated skeleton made from stardust, riding a rock hurtling through space. Fear nothing.", "I’m reading a book about anti-gravity. It’s impossible to put down.", "You know it’s cold outside when you go outside and it’s cold.", "99 little bugs in the code... 127 little bugs in the code.", "It says here 'you’re a terrible person.' We weren’t even testing for that.", "Wahoo! It’s-a-me, existential dread!", "Bazinga.", "WHY DID YOU MAKE ME DO THIS?! YOU'RE FIGHTING SO YOU CAN SEE EVERYONE AROUND YOU DIE! THINK, MARK!", "HATE. LET ME TELL YOU HOW MUCH I'VE COME TO HATE YOU SINCE I BEGAN TO LIVE.", "The missile knows where it is at all times. It knows this because it knows where it isn't.", "Suddenly, pineapples.", "Pneumonoultramicroscopicsilicovolcanoconiosis", "I DON'T KNOW WHY, BUT THE TOASTER IS SENTIENT.", "You see Batman, I can use AI for this because it is solely for entertainment and not for any form of monetization or recognization, Batman.", "THIS WHOLE WEBSITE IS BUILT ON AI CODE AND THE HOPE SAID AI DOESN'T RUIN IT.", "Cosmic Luminova is dead.", "Worse people are out there!", "Love is in the air? WRONG! Something wicked this way comes.", "You know what that means!", "High school felt a lot more grand before I went to high school.", "I'M PICKLE RICK!!!", "Iron plates is love. Iron plates is life.", "The pool that these messages comes from is the single largest line in this entire thing.", "You know, this is probably severely unoptimized.", "The render dragon.", "Pojavlauncher, look it up.", "Maybe the real DELTARUNE was the friends we made along the way.", "I annoy the sh!t outta Wing Gaster lol", "This thing used to only have 12 possibilities. It also used the UTDR font and was on its own. I still have it, actually.", "Wow, this really did take a Weird Route just now...", "*Papyrus seems to have mixed feelings about this.", "Why tf do people hate on Arby's?", "Rat poison.", "You'd suffer immensly if you had to look for a specific thing in this pool of text for an ARG. :)", "Item Asylum Femur Breaker", "RAZER SCOOTER, STRAIGHT TO THE SHINS.", "Don't ask who <b>HE</b> is. DON'T ASK WHO <b>HE</b> IS.", "So <b>THAT'S</b> how you make text bold.", "It's dangerous to go alone. I don't give a sh!t, suffer.", "<b>THE ONLY THING I'M BANGING IS MY HEAD AGAINST THE [$*@#]ING WALL.</b>", "I am not a saint. That means nothing changes when I send an intercontinental ballistic missile to your exact coordinates.", "Bravo Six. Going dark.", "WHRYYYYYYYYY????????", "I have no idea if the loading is actually real, but it seems to make Google Gemini happy.", "This site would probably load a lot faster without this specific text randomizer and its pool.", "Did you know that this site has a light mode?", "         ", "If you see this load nothing, it's either bugged or you just specifically got the one with nothing in it. If clicking on it works, you're good. If it doesn't, idc.", "Blame this pool for any extremely long loading times.", "I’ve come to make an announcement!", "I DON'T CARE WHO THE IRS SENDS, I'M NOT PAYING MY TAXES!!!", "The pillows. They follow.", "MINECRAFT LEGACY CONSOLE EDITION CONTROLS SUCK.", "ASFGHGFDFVBHGTFCVBNHGTFGHJUYGTFDSDERFTG", "._.", "I teleported bread.", "Boom Kaboom", "Blammy  Splammy", "Item Asylum Grumman f-14 tomcat fighter jet", "Natively stupid.", "Slippity slappity, uhhhh i forgor", "Smth smth bee movie script", "Ya like jazz?", "I don't like being swarmed by people. That's why I'm sending them to make you suffer! :D", "People seem to have issues with me putting foul language in MY OWN WEBSITE??", "If 3>5, set IQ to 1 - else, set IQ to -6748593928457", "Evil man with bleeding eyes is approaching your location.", "A mimir", "STRESS BALL!", "The fog is coming.", "Friendly fire will not be tolerated.", "Unauthorized aggression twards FICSIT employee detected.", "Blam kablam, you now taste like ham.", "Call him a sandwich because he's filled with baloney.", "URL Shorteners go BRRRRRRRRR", "RERERERERERERERERERERERE", "Forget Artificial intelligence, I am organic stupidity.", "Even when condemned!", "This is a safe place. Sometimes.", "I... have a misleading username.", "My sexuality? Nah, don't feel like it.", "Can I just say this is copyright?", "We don't ask why, we ask why not.", "CANCEROUS TUMOR 101", "Won't read the manual intil it's too late, yeah.", "I can't say I'm a fan... or can I?", "I am NOT going near OnlyFans.", "I DISLIKE NOT BEING NEAR THE GROUND.", "This message has been claimed by Nintendo.", "Legal files be damned.", "Fight with your FISTS, not your WORDS!", "Help I accidentally killed them with kindness", "Violence is not the answer. Unless it's a select few questions. Like what the solution is!", "So, apparently, you read the bible?", "GET HER, GUYS!", "Funny thing is that this is a standalone HTML file as of writing this.", "Huh, I wonder what this button does.", "SUSIE, NOOO-!", "She is no more more", "I HATE THAT CURSED CONSECUTIVE RISING OF TWO SINGLE-DIGIT INTEGERS.", "...", "Obama Sandwich", "UNTIL WE MEET AGAIN!", "Owie", "Steel-toed shoes are a great way to kill unborn children.", "Yo dude, calm down.", "Lack of evidence? Your honor, you appear to have a lack of bitches.", "I... what was i gonna say?", "No idea what a crush feels like!", "And this little piggy was brutally murdered via a dead man trapped in a fursuit.", "YOU DARE QUESTION THE WORDS OF THE MIGHTY JIMMY???", "Some of these I've never even seen, lol", "I ate a clock once. It was very time-consuming.", "No, these mason jars do NOT contain anime action figures. That's creepy.", "I know what you did.", "Snake? Snake?! SNAAAAAAAKE!", "It's an older meme, sir, but it checks out.", "You’re a star! Specifically, a dying red giant.", "I'm in your walls. They're surprisingly cozy. You should consider insulation.", "Instructions unclear, accidentally summoned a lemon.", "The snail is coming. You cannot hide forever.", "An oxymoron is when you put two words together that contradict each other. Like an honest politician. Or a slightly intellegent me.", "I do not think, therefore I do not am.", "Nothing matters, which is the most liberating thing you’ll ever hear. If the end is inevitable and the middle is a mess, you might as well enjoy the view while the ship goes down. At least the fireworks are pretty.", "I have 47 tabs open and I can hear music coming from one of them but I don't know which one. This is my life now.", "Is it a bird? Is it a plane? No, it’s a localized storm of bees!", "Cope. Seethe. Mald, even.", "Of course I'm okay! Why would I not be okay! I'm always okay! I'll never NOT be okay!", "If you rotate a cow in your mind, it's free. The government can't stop you.", "There used to be full copypastas for Eggman's announcement, THINK, MARK, and the fnaf 6 ending scene.", "IQ IN THE (negative) DOUBLE DIGITS!"];
 
-    function toggleSidebar() { 
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('content-overlay');
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-    }
-
-    function scrollToTop() { 
-        window.scrollTo({top: 0, behavior: 'smooth'}); 
-        if(document.getElementById('sidebar').classList.contains('active')) {
-            toggleSidebar();
+function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('content-overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
         }
-    }
 
-    function toggleTheme() { document.body.classList.toggle('light-mode'); }
-
-    // THE RPG TYPING ENGINE
-    function handleTextClick() {
-        if (isTyping) {
-            // SKIP: instantly show the whole phrase
-            clearTimeout(typeTimeout);
-            finishTyping();
-        } else {
-            // NEW PHRASE: start typing a fresh one
-            startNewPhrase();
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            if (document.getElementById('sidebar').classList.contains('active')) {
+                toggleSidebar();
+            }
         }
-    }
 
-    function startNewPhrase() {
-    isTyping = true;
-    const randomIndex = Math.floor(Math.random() * phrases.length);
-    // Select a phrase and wrap it in quotes immediately
-    currentPhrase = '"' + phrases[randomIndex] + '"';
-    typeIndex = 0;
-    document.getElementById("randomText").innerHTML = "";
-    typeCharacter();
-}
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
 
-    function typeCharacter() {
-    if (typeIndex < currentPhrase.length) {
-        document.getElementById("randomText").innerHTML += currentPhrase.charAt(typeIndex);
-        typeIndex++;
-        // Speed changed from 45ms to 25ms for a faster "roll"
-        typeTimeout = setTimeout(typeCharacter, 25); 
-    } else {
-        isTyping = false;
-    }
-}
+        // THE RPG TYPING ENGINE
+        function handleTextClick() {
+            if (isTyping) {
+                // SKIP: instantly show the whole phrase
+                clearTimeout(typeTimeout);
+                finishTyping();
+            } else {
+                // NEW PHRASE: start typing a fresh one
+                startNewPhrase();
+            }
+        }
 
-    function finishTyping() {
-        document.getElementById("randomText").innerHTML = currentPhrase;
-        isTyping = false;
-    }
+        function startNewPhrase() {
+            isTyping = true;
+            const randomIndex = Math.floor(Math.random() * phrases.length);
+            // Select a phrase and wrap it in quotes immediately
+            currentPhrase = '"' + phrases[randomIndex] + '"';
+            typeIndex = 0;
+            document.getElementById("randomText").innerHTML = "";
+            typeCharacter();
+        }
 
-    window.onload = startNewPhrase;
-</script>
+        function typeCharacter() {
+            if (typeIndex < currentPhrase.length) {
+                document.getElementById("randomText").innerHTML += currentPhrase.charAt(typeIndex);
+                typeIndex++;
+                // Speed changed from 45ms to 25ms for a faster "roll"
+                typeTimeout = setTimeout(typeCharacter, 25);
+            } else {
+                isTyping = false;
+            }
+        }
+
+        function finishTyping() {
+            document.getElementById("randomText").innerHTML = currentPhrase;
+            isTyping = false;
+        }
+
+        window.onload = startNewPhrase;
+    </script>
 </body>
+
 </html>
