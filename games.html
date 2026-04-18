@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - The Pencil's Place</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
+        @font-face {
+            font-family: 'UTDR';
+            src: url('https://file.garden') format('opentype');
+        }
+
+        :root {
+            --bg-gradient: radial-gradient(circle, #2e104a 0%, #11061a 100%);
+            --box-bg: rgba(255, 255, 255, 0.05);
+            --box-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f0f0f0;
+        }
+
+        body {
+            font-family: 'UTDR', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Back button */
+        .back-btn {
+            position: fixed;
+            z-index: 1002;
+            top: 20px;
+            left: 20px;
+            background: #9900ff;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'UTDR', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+        }
+
+        /* Main content boxes */
+        header, section {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px 0;
+            padding: 40px;
+            background: var(--box-bg);
+            border: 2px solid var(--box-border);
+            box-sizing: border-box;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            text-align: center;
+        }
+
+        /* Animations from main page */
+        @keyframes bob {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes tilt {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .title-container {
+            display: inline-block;
+            animation: bob 4s ease-in-out infinite;
+        }
+
+        h1 {
+            color: #ffcc00;
+            font-size: clamp(2.5em, 8vw, 3.5em);
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.6), 2px 2px #000;
+            animation: tilt 6s ease-in-out infinite;
+        }
+
+        h2 {
+            color: #00d4ff;
+            border-bottom: 2px solid #444;
+            display: inline-block;
+            padding: 0 30px 5px 30px;
+            margin-bottom: 25px;
+        }
+
+        /* Game boxes */
+        .game-box {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        iframe {
+            border: none;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        footer {
+            margin: 40px 0;
+            color: #777;
+        }
+        
+        /* GRID CONTAINER */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* INDIVIDUAL BUTTON */
+.game-btn {
+    width: 150px;
+    height: 190px; /* slightly taller than wide */
+
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px;
+    box-sizing: border-box;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* IMAGE */
+.game-btn img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* TEXT */
+.game-btn span {
+    margin-top: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* HOVER GLOW EFFECT */
+.game-btn:hover {
+    transform: translateY(-5px) scale(1.03);
+    border-color: #9900ff;
+    box-shadow: 0 0 15px rgba(153, 0, 255, 0.4);
+}
+
+.game-btn {
+    width: 150px;
+    height: 190px;
+
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px;
+    box-sizing: border-box;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    text-decoration: none;   /* ✅ removes underline */
+    color: inherit;          /* ✅ keeps text color */
+}
+    </style>
+    
+</head>
+
+<body>
+
+    <!-- Back button (replaces menu) -->
+    <a href="index.html" class="back-btn">⬅ Home</a>
+
+    <header>
+        <div class="title-container">
+            <h1>Games</h1>
+        </div>
+        <p>Stuff you can play or mess around with.</p>
+    </header>
+
+    <section>
+        <h2>My Games</h2>
+
+        <div class="game-grid">
+
+    <!-- Button 1 -->
+    <a href="pixel-client.html" class="game-btn">
+        <img src="pixel-client.png" alt="PixelClient">
+        <span>Pixel Client (Eaglercraft)</span>
+    </a>
+    
+    <!-- Button 2 -->
+    <a href="game1.html" class="game-btn">
+        <img src="https://via.placeholder.com/150" alt="Game 1">
+        <span>Game 2</span>
+    </a>
+
+    <!-- Button 3 -->
+    <a href="game1.html" class="game-btn">
+        <img src="https://via.placeholder.com/150" alt="Game 1">
+        <span>Game 3</span>
+    </a>
+
+    <!-- Button 4 -->
+    <a href="game1.html" class="game-btn">
+        <img src="https://via.placeholder.com/150" alt="Game 1">
+        <span>Game 4</span>
+    </a>
+
+    <!-- Button 5 -->
+    <a href="game1.html" class="game-btn">
+        <img src="https://via.placeholder.com/150" alt="Game 1">
+        <span>Game 5</span>
+    </a>
+
+    <!-- Button 6 -->
+    <a href="game1.html" class="game-btn">
+        <img src="https://via.placeholder.com/150" alt="Game 1">
+        <span>Game 6</span>
+    </a>
+
+    <!-- Button 7 -->
+   <a href="game1.html" class="game-btn">
+        <img src="https://via.placeholder.com/150" alt="Game 1">
+        <span>Game 7</span>
+    </a>
+
+    <!-- Button 8 -->
+   <a href="game1.html" class="game-btn">
+        <img src="https://via.placeholder.com/150" alt="Game 1">
+        <span>Game 8</span>
+    </a>
+
+    <!-- Button 9 -->
+    <a href="game1.html" class="game-btn">
+        <img src="https://via.placeholder.com/150" alt="Game 1">
+        <span>Game 9</span>
+    </a>
+
+</div>
+
+        <!-- Example game -->
+        <!--
+        <div class="game-box">
+            <h3>My Cool Game</h3>
+            <iframe src="your-game.html" width="100%" height="400"></iframe>
+        </div>
+        -->
+
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Jason_ThePencil. All rights reserved (maybe). Site version 1.0.0</p>
+    </footer>
+
+</body>
+</html>
