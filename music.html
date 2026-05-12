@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music - The Pencil's Place</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon-music.png">
+    <style>
+        @font-face {
+            font-family: 'UTDR-Custom';
+            src: url('assets/fonts/UTDR.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --sky-top: #05070a;
+            --sky-bottom: #161824;
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-primary: #ffffff;
+            --accent-color: #bc13fe;
+            --btn-purple: #9900ff;
+            --glow-color: rgba(188, 19, 254, 0.8);
+            --btn-glow: rgba(153, 0, 255, 0.8);
+            --window-glow: #ffee00;
+            --tower-light: #ff3333;
+            --star-color: #ffffff;
+        }
+
+        body {
+            font-family: 'UTDR-Custom', sans-serif;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 20px padding at top and bottom as requested */
+            padding: 20px; 
+            gap: 25px;
+            margin: 0;
+            box-sizing: border-box;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* 🏠 Home Button */
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--btn-purple);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .home-btn:hover {
+            box-shadow: 0 0 20px var(--btn-glow);
+            transform: scale(1.05);
+            border-color: white;
+        }
+
+        /* ✨ Stars */
+        .stars-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .stars-container::before, .stars-container::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 20% 30%, var(--star-color), transparent),
+                radial-gradient(1.2px 1.2px at 50% 10%, var(--star-color), transparent),
+                radial-gradient(2px 2px at 80% 40%, var(--star-color), transparent),
+                radial-gradient(1px 1px at 30% 60%, var(--star-color), transparent);
+            background-size: 400px 400px;
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.9));
+        }
+
+        .stars-container::before { animation: twinkle 4s infinite ease-in-out; }
+        .stars-container::after { background-position: 200px 100px; animation: twinkle 7s infinite ease-in-out -3s; }
+
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* 🌙 Moon */
+        .moon {
+            position: fixed;
+            top: 50px;
+            right: 8%;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 18px 12px 0 0 #f0f0f0;
+            filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.4));
+            z-index: 1; 
+            transform: rotate(-10deg);
+        }
+
+        /* ☄️ Shooting Stars */
+        .shooting-star {
+            position: fixed;
+            width: 2px; height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #fff;
+            opacity: 0;
+            z-index: 2;
+        }
+
+        .shooting-star::after {
+            content: "";
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            width: 120px; height: 1px;
+            background: linear-gradient(90deg, #fff, transparent);
+        }
+
+        .s1 { top: 0; left: 30%; animation: shoot 10s linear infinite 2s; }
+        .s2 { top: 0; left: 60%; animation: shoot 12s linear infinite 5s; }
+        .s3 { top: 0; left: 90%; animation: shoot 15s linear infinite 8s; }
+
+        @keyframes shoot {
+            0% { transform: rotate(-35deg) translateX(0); opacity: 0; }
+            5% { opacity: 1; }
+            15% { transform: rotate(-35deg) translateX(-1200px); opacity: 0; }
+            100% { transform: rotate(-35deg) translateX(-1200px); opacity: 0; }
+        }
+
+        /* 🏙️ Cityscape */
+        .city-background {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%; height: 60vh;
+            display: flex; align-items: flex-end; justify-content: center;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .building {
+            background: #020202;
+            position: relative; flex-shrink: 0;
+            display: flex; flex-direction: column; align-items: center;
+            overflow: hidden; margin-left: -25px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.7);
+        }
+
+        .building.bg-layer { background: #010101; filter: brightness(0.4); z-index: 4; }
+        .building.fg-layer { z-index: 6; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        .building::before {
+            content: ""; width: 100%; height: 20px;
+            background: inherit; flex-shrink: 0; z-index: 7;
+        }
+
+        .windows {
+            width: 75%; height: 100%; margin-top: 5px;
+            background-image: 
+                repeating-linear-gradient(to bottom, var(--window-glow) 0, var(--window-glow) 3px, transparent 3px, transparent 16px),
+                repeating-linear-gradient(to right, transparent 0, transparent 8px, #000 8px, #000 12px);
+            opacity: 0.6;
+        }
+
+        .b-1 { width: 70px; height: 55vh; }
+        .b-2 { width: 85px; height: 45vh; }
+        .b-3 { width: 110px; height: 35vh; }
+        .b-4 { width: 60px; height: 50vh; }
+        .b-5 { width: 130px; height: 30vh; }
+        .b-back { width: 90px; height: 58vh; }
+
+        .tower-complex {
+            width: 40px; display: flex; flex-direction: column; align-items: center;
+            flex-shrink: 0; z-index: 7; margin-left: -15px;
+        }
+        .t-tall { height: 52vh; }
+        .t-mid  { height: 40vh; }
+
+        .tower-neck {
+            width: 12px; height: 100%; background: #080808;
+            background-image: linear-gradient(45deg, #111 25%, transparent 25%), linear-gradient(-45deg, #111 25%, transparent 25%);
+            background-size: 8px 8px;
+        }
+        .tower-top { width: 3px; height: 60px; background: #0a0a0a; position: relative; }
+        .signal-light {
+            position: absolute; top: -5px; left: -3.5px;
+            width: 10px; height: 10px; background: var(--tower-light);
+            border-radius: 50%; box-shadow: 0 0 15px var(--tower-light);
+            animation: blink 2s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* 🧊 Content */
+        .section-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            width: 100%; max-width: 650px;
+            box-sizing: border-box;
+            backdrop-filter: blur(15px) saturate(160%);
+            -webkit-backdrop-filter: blur(15px) saturate(160%);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            z-index: 10;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0; font-size: 4rem; letter-spacing: 1px;
+            color: var(--accent-color); text-transform: uppercase;
+            text-shadow: 0 0 20px var(--glow-color);
+        }
+
+        p { line-height: 1.6; color: #ddd; }
+        .content-box { display: flex; flex-direction: column; gap: 15px; }
+
+        details {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px; padding: 12px 18px; transition: 0.3s;
+            text-align: left;
+        }
+        details:hover { border-color: var(--accent-color); box-shadow: 0 0 20px var(--glow-color); }
+
+        summary { font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; }
+        summary::after { content: '▶'; color: var(--accent-color); transition: 0.3s; }
+        details[open] summary::after { transform: rotate(90deg); }
+
+        .dropdown-inner {
+            margin-top: 15px; padding-top: 10px;
+            border-top: 1px solid var(--accent-color);
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        audio { width: 100%; filter: invert(90%) hue-rotate(240deg) brightness(1.2); }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-btn">← Home</a>
+
+    <div class="stars-container"></div>
+    <div class="shooting-star s1"></div>
+    <div class="shooting-star s2"></div>
+    <div class="shooting-star s3"></div>
+    <div class="moon"></div>
+
+    <div class="city-background">
+        <div class="building b-2 bg-layer"><div class="windows"></div></div>
+        <div class="building b-1 fg-layer"><div class="windows"></div></div>
+        <div class="building b-back bg-layer"><div class="windows"></div></div>
+        <div class="tower-complex t-tall">
+            <div class="tower-top"><div class="signal-light"></div></div>
+            <div class="tower-neck"></div>
+        </div>
+        <div class="building b-4 fg-layer"><div class="windows"></div></div>
+        <div class="building b-3 fg-layer"><div class="windows"></div></div>
+        <div class="building b-back bg-layer"><div class="windows"></div></div>
+        <div class="building b-2 fg-layer"><div class="windows"></div></div>
+        <div class="building b-5 fg-layer"><div class="windows"></div></div>
+        <div class="building b-back bg-layer"><div class="windows"></div></div>
+        <div class="tower-complex t-mid">
+            <div class="tower-top"><div class="signal-light"></div></div>
+            <div class="tower-neck"></div>
+        </div>
+        <div class="building b-1 fg-layer"><div class="windows"></div></div>
+        <div class="building b-3 fg-layer"><div class="windows"></div></div>
+        <div class="building b-back bg-layer"><div class="windows"></div></div>
+        <div class="building b-4 fg-layer"><div class="windows"></div></div>
+        <div class="building b-2 bg-layer"><div class="windows"></div></div>
+    </div>
+
+    <header class="section-box">
+        <h1>MUSIC</h1>
+    </header>
+
+    <section class="section-box">
+        <p>This is the page I use for tracks I see fit of sharing. Some will be older, others won't. Either way, This is my music page. Have fun, and enjoy listening to tracks by yours truly.</p>
+        <p>You can download all of these tracks (and more) <a href=assets/other/music.zip>here.</a></p>
+    </section>
+
+    <main class="section-box content-box">
+        <details>
+            <summary>1. Memories</summary>
+            <div class="dropdown-inner">
+                <p>One of my early tracks, during the experimental phase. I really like how it ended up. I remember the original idea behind it - "A song with little to no repeated melodies." And I delivered with a track that I think still holds up to this day (mostly).</p>
+                <audio controls><source src="assets/music/Memories.mp3" type="audio/mpeg"></audio>
+            </div>
+        </details>
+        <details>
+            <summary>2. Insanity</summary>
+            <div class="dropdown-inner">
+                <p>A song that I made almost a year later, inspired my Memories. I think I did good, taking the cocept of Memories and completely changing the tone - This is a good one. It also has, like, 3 drum instruments playing at once for most of the song.</p>
+                <audio controls><source src="assets/music/Insanity.mp3" type="audio/mpeg"></audio>
+            </div>
+        </details>
+        <details>
+            <summary>3. Breakdown</summary>
+            <div class="dropdown-inner">
+                <p>Another track inspired by Memories and Insanity - it delivers once again. This one was meant to be somber, but I eventually made it fast - and it worked. Amazingly, I might add. The main instrument I actually later use as BF's voice.</p>
+                <audio controls><source src="assets/music/Breakdown.mp3" type="audio/mpeg"></audio>
+            </div>
+        </details>
+        <details>
+            <summary>4. Untitled</summary>
+            <div class="dropdown-inner">
+                <p>An upbeat song I had no major ideas going into. But, yep, ended up in a similar vein as Memories, Insanity, and Breakdown. But it was all worth it. Seems to be the most recognized track of mine on Reddit. Move over, Chaos, we've got a new #1 track in town.</p>
+                <audio controls><source src="assets/music/Untitled.mp3" type="audio/mpeg"></audio>
+            </div>
+        </details>
+        <details>
+            <summary>5. Chaos</summary>
+            <div class="dropdown-inner">
+                <p>""Former"" best track of mine. This was actually made before Insanity, but after Memories. It was the last of my tracks to be in the 7-8 minute range of length - at least, as of writing this. Still a great track.</p>
+                <audio controls><source src="assets/music/Chaos.ogg" type="audio/ogg"></audio>
+            </div>
+        </details>
+        <details>
+            <summary>6. Mischief</summary>
+            <div class="dropdown-inner">
+                <p>A fun lil' track made from a bug when trying to import a song made on the original BeepBox to AbyssBox - and Chaos was the song that was loaded beforehand. Also introduced me to the "Chip wave as a noise instrument" bug that I managed, and use in later tracks. It came after Chaos, but I think it came before Insanity? Can't exactly remember.</p>
+                <audio controls><source src="assets/music/Mischief.mp3" type="audio/mpeg"></audio>
+            </div>
+        </details>
+        <details>
+            <summary>7. Chill</summary>
+            <div class="dropdown-inner">
+                <p>Just a chill, almost Lo-Fi sounding track I made for fun. Nothing to insane. I like how I used a square wave wit reverb for one of the instruments, though. I also like the chipwave music box.</p>
+                <audio controls><source src="assets/music/Chill.mp3" type="audio/mpeg"></audio>
+            </div>
+        </details>
+        <details>
+            <summary>8. Finale Remastered</summary>
+            <div class="dropdown-inner">
+                <p>A remaster to my second or third song, The Finale. It's kind of a mini-track, but not really. But, I will say, it's much better than the original.</p>
+                <audio controls><source src="assets/music/Finale Remastered.mp3" type="audio/mpeg"></audio>
+            </div>
+        </details>
+        <details>
+            <summary>9. The End.</summary>
+            <div class="dropdown-inner">
+                <p>A track that's basically, just: "What if a game of mine had a bad ending?" It uses the main melody of The Finale along with my Creativity Motif, plus a reference to Alice's motif. I even referenced "Neverending Night" by Toby Fox at the end of the track. It ended up being longer than I expected, too.</p>
+                <audio controls><source src="assets/music/The End.mp3" type="audio/mpeg"></audio>
+            </div>
+        </details>
+    </main>
+
+    <footer class="section-box">
+        <p>&copy; 2026 Jason_ThePencil. All rights reserved (maybe).</p>
+    </footer>
+
+</body>
+</html>

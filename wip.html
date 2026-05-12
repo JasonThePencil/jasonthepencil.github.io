@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work in Progress - The Pencil's Place</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <style>
+        @font-face {
+            font-family: 'UTDR';
+            src: url('https://file.garden') format('opentype');
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        :root {
+            --bg-gradient: radial-gradient(circle, #2e104a 0%, #11061a 100%);
+            --box-bg: rgba(255, 255, 255, 0.05);
+            --box-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f0f0f0;
+            --sidebar-bg: rgba(17, 6, 26, 0.98);
+            --overlay-color: rgba(0, 0, 0, 0.6);
+            
+        body {
+            font-family: 'UTDR', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+
+        header, section {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px 0;
+            padding: 40px;
+            box-sizing: border-box;
+            background: var(--box-bg);
+            border: 2px solid var(--box-border);
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            text-align: center;
+        }
+
+        @keyframes bob { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+        @keyframes tilt { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+
+        .title-container {
+            display: inline-block;
+            animation: bob 4s ease-in-out infinite;
+        }
+        h1 {
+            color: #ffcc00;
+            font-size: clamp(2.2em, 7vw, 3.2em);
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.6), 2px 2px #000;
+            animation: tilt 6s ease-in-out infinite;
+        }
+
+        .wip-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #00d4ff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .back-link:hover {
+            background: #00d4ff;
+            color: #11061a;
+        }
+    </style>
+</head>
+<body id="body">
+
+    <header id="top">
+        <div class="title-container">
+            <h1>Work in Progress</h1>
+        </div>
+    </header>
+
+    <main style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        <section>
+            <img src="assets/img/wip.png" alt="Under Construction" class="wip-image">
+            <p style="font-size: 1.2em; margin-top: 20px;">This area is currently being built. Check back later!</p>
+            <a href="index.html" class="back-link">Return Home</a>
+        </section>
+    </main>
+
+    <footer style="margin: 50px 0; color: #777; font-weight: bold;">
+        <p>&copy; 2026 Jason_ThePencil. Site Version 2.3.9</p>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('content-overlay').classList.toggle('active');
+        }
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+    </script>
+</body>
+</html>
